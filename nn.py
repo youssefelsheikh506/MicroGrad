@@ -3,7 +3,7 @@ from engine import Value
 
 class Module:
     def zero_grad(self):
-       for p in self.parameters():
+       for p in self.paramters():
           p.grad = 0.0
 
     def paramters(self):
