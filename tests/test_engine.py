@@ -1,5 +1,5 @@
 import torch
-from Init.MicroGrad.src.engine import Value
+from src.engine import Value
 
 def test_sanity_check():
 
@@ -66,6 +66,7 @@ def test_more_ops():
     assert abs(amg.grad - apt.grad.item()) < tol
     assert abs(bmg.grad - bpt.grad.item()) < tol
 
-test_sanity_check()
-test_more_ops()
-print("Passed The Test Cases")
+if __name__ == "__main__":
+    test_sanity_check()
+    test_more_ops()
+    print("Passed The Test Cases")
