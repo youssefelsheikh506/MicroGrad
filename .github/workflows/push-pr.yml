@@ -7,6 +7,10 @@ on:
             - "release/**"
         paths:
             - "src/**"
+            - "test/**"
+            - "requirements*.txt"
+            - "pyproject.toml"
+            - ".github/workflows/**"
 
     pull_request:
         branches:
@@ -20,5 +24,20 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v6.1.0
             
-            - name: Run tests
-              run: npm test
+            - name: Setup python
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.11"
+
+            - name: Cache pip dependencies
+              uses: actions/cache@v4
+              with:
+                path: ~/.cache/pip
+                key: ${{runner.os}} -pip- ${{hashFiles('**/requirements*.txt', '**/pyproject.toml')}}
+                restore-keys: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+                  pip install pytest pytest-cov
+                
+            - name: Run Tests
+              run: pytest test/ -v --cov=src --cov-report=term-missing
