@@ -1,6 +1,15 @@
 on: 
   workflow_dispatch:
-
+    inputs:
+      enviroment:
+        description: "Choose description"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+          - post production
 jobs:
   deploy:
     runs-on: ubuntu-latest
